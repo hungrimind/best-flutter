@@ -13,52 +13,54 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
-      home: const MyHomePage(),
+      home: const LayoutDemo(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class LayoutDemo extends StatelessWidget {
+  const LayoutDemo({super.key});
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  Widget _buildColorBox(Color color) {
+    return Container(
+      margin: const EdgeInsets.all(8),
+      width: 50,
+      height: 50,
+      color: color,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Row & Column Demo'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Update Counter'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          children: [
+            // A row of colored boxes
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildColorBox(Colors.red),
+                _buildColorBox(Colors.green),
+                _buildColorBox(Colors.blue),
+              ],
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            const SizedBox(height: 20), // Spacing
+            // A column of text
+            Column(
+              children: const [
+                Text('First Text'),
+                Text('Second Text'),
+                Text('Third Text'),
+              ],
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
