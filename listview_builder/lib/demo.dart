@@ -10,9 +10,9 @@ class ListViewBuilderExample extends StatelessWidget {
         title: Text('ListView.builder Example'),
       ),
       body: ListView.builder(
-        itemCount: 5,
+        itemCount: 100,
         itemBuilder: (context, index) {
-          return Text('static text');
+          return Text('item $index');
         },
       ),
     );
