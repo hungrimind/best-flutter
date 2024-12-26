@@ -15,6 +15,13 @@ class LayoutDemo extends StatelessWidget {
             Text('by Hungrimind',
                 style: Theme.of(context).textTheme.titleMedium,
             ),
+            Row(
+              children: [
+                Container(width: 50, height: 50, color: Colors.red),
+                Container(width: 50, height: 50, color: Colors.green),
+                Container(width: 50, height: 50, color: Colors.blue),
+              ],
+            ),
           ],
         ),
       ),
