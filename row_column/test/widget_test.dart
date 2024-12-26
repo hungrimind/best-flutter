@@ -1,30 +1,32 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:demo/main.dart';
+import 'package:demo/demo.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Layout contains Row with three colored containers', (WidgetTester tester) async {
+    // Build the widget
+    await tester.pumpWidget(const MaterialApp(home: LayoutDemo()));
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Find the Row widget
+    final rowFinder = find.byType(Row);
+    expect(rowFinder, findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Find all containers
+    final containerFinder = find.byType(Container);
+    expect(containerFinder, findsNWidgets(3));
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Get the actual Container widgets
+    final containers = tester.widgetList<Container>(containerFinder);
+
+    // Verify the properties of each container
+    int index = 0;
+    final expectedColors = [Colors.red, Colors.green, Colors.blue];
+    
+    for (var container in containers) {
+      expect((container.constraints)?.maxWidth, 50);
+      expect((container.constraints)?.maxHeight, 50);
+      expect(container.color, expectedColors[index]);
+      index++;
+    }
   });
 }

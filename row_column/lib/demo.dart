@@ -10,15 +10,10 @@ class LayoutDemo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Row & Column Lesson',
-                style: Theme.of(context).textTheme.titleLarge),
+                style: Theme.of(context).textTheme.titleLarge,
+            ),
             Text('by Hungrimind',
-                style: Theme.of(context).textTheme.titleMedium),
-            Row(
-              children: [
-                Container(width: 50, height: 50, color: Colors.red),
-                Container(width: 50, height: 50, color: Colors.green),
-                Container(width: 50, height: 50, color: Colors.blue),
-              ],
+                style: Theme.of(context).textTheme.titleMedium,
             ),
           ],
         ),
