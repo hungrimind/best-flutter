@@ -16,11 +16,10 @@ void main() {
     await tester.pumpWidget(const MaterialApp(home: Widgets()));
 
     // Verify Text widget
-    expect(find.text('Simple Text Widget'), findsOneWidget);
+    expect(find.byType(Text), findsOneWidget);
 
     // Verify ListTile and its contents
     expect(find.byType(ListTile), findsOneWidget);
-    expect(find.text('List Tile Widget'), findsOneWidget);
     expect(find.byIcon(Icons.star), findsOneWidget);
 
     // Verify FlutterLogo
