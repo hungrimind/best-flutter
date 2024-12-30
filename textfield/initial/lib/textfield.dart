@@ -9,7 +9,7 @@ class TextFieldExample extends StatefulWidget {
 
 class _TextFieldExampleState extends State<TextFieldExample> {
   final TextEditingController _controller = TextEditingController();
-  final String _displayText = '';
+  String _displayText = '';
 
   @override
   Widget build(BuildContext context) {
