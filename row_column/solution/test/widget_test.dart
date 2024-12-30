@@ -1,9 +1,10 @@
+import 'package:demo/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:demo/demo.dart';
 
 void main() {
-  testWidgets('Layout contains Row with three colored containers', (WidgetTester tester) async {
+  testWidgets('Layout contains Row with three colored containers',
+      (WidgetTester tester) async {
     // Build the widget
     await tester.pumpWidget(const MaterialApp(home: LayoutDemo()));
 
@@ -21,7 +22,7 @@ void main() {
     // Verify the properties of each container
     int index = 0;
     final expectedColors = [Colors.red, Colors.green, Colors.blue];
-    
+
     for (var container in containers) {
       expect((container.constraints)?.maxWidth, 50);
       expect((container.constraints)?.maxHeight, 50);
