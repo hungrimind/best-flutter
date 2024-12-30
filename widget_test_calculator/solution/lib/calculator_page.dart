@@ -72,19 +72,35 @@ class _CalculatorPageState extends State<CalculatorPage> {
               children: [
                 ElevatedButton(
                   onPressed: () => _setOperation('+'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: operation == '+' ? Colors.blue : null,
+                    foregroundColor: operation == '+' ? Colors.white : null,
+                  ),
                   child: const Text('+'),
                 ),
                 ElevatedButton(
                   onPressed: () => _setOperation('-'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: operation == '-' ? Colors.blue : null,
+                    foregroundColor: operation == '-' ? Colors.white : null,
+                  ),
                   child: const Text('-'),
                 ),
                 ElevatedButton(
                   onPressed: () => _setOperation('*'),
-                  child: const Text('×'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: operation == '*' ? Colors.blue : null,
+                    foregroundColor: operation == '*' ? Colors.white : null,
+                  ),
+                  child: const Text('*'),
                 ),
                 ElevatedButton(
                   onPressed: () => _setOperation('/'),
-                  child: const Text('÷'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: operation == '/' ? Colors.blue : null,
+                    foregroundColor: operation == '/' ? Colors.white : null,
+                  ),
+                  child: const Text('/'),
                 ),
               ],
             ),

@@ -54,7 +54,7 @@ void main() {
       // Act
       await tester.enterText(find.byType(TextField).first, '4');
       await tester.enterText(find.byType(TextField).last, '3');
-      await tester.tap(find.text('×'));
+      await tester.tap(find.text('*'));
       await tester.pump();
       await tester.tap(find.text('Calculate'));
       await tester.pump();
@@ -70,7 +70,7 @@ void main() {
       // Act
       await tester.enterText(find.byType(TextField).first, '10');
       await tester.enterText(find.byType(TextField).last, '2');
-      await tester.tap(find.text('÷'));
+      await tester.tap(find.text('/'));
       await tester.pump();
       await tester.tap(find.text('Calculate'));
       await tester.pump();
@@ -86,7 +86,7 @@ void main() {
       // Act
       await tester.enterText(find.byType(TextField).first, '10');
       await tester.enterText(find.byType(TextField).last, '0');
-      await tester.tap(find.text('÷'));
+      await tester.tap(find.text('/'));
       await tester.pump();
       await tester.tap(find.text('Calculate'));
       await tester.pump();

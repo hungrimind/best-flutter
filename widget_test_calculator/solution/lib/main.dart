@@ -1,3 +1,4 @@
+import 'package:demo/calculator_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,14 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Calculator Demo'),
-        ),
-        body: const Center(
-          child: Text('Calculator Demo - Check tests!'),
-        ),
-      ),
+      home: CalculatorPage(),
     );
   }
 }
