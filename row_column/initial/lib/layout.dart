@@ -5,20 +5,18 @@ class LayoutDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Row & Column Lesson',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            Text(
-              'by Hungrimind',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Row & Column Lesson',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          Text(
+            'by Hungrimind',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+        ],
       ),
     );
   }
