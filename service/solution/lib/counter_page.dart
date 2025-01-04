@@ -1,3 +1,5 @@
+import 'package:demo/date_service.dart';
+import 'package:demo/locator.dart';
 import 'package:flutter/material.dart';
 import 'counter_view_model.dart';
 
@@ -16,7 +18,10 @@ class _CounterPageState extends State<CounterPage> {
   @override
   void initState() {
     super.initState();
-    counterViewModel = CounterViewModel();
+
+    counterViewModel = CounterViewModel(
+      dateService: locator<DateService>(),
+    );
   }
 
   @override
@@ -35,7 +40,15 @@ class _CounterPageState extends State<CounterPage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 20,
           children: [
+            const Text('Current Date from the service:'),
+            ValueListenableBuilder(
+              valueListenable: counterViewModel.dateService,
+              builder: (context, date, child) {
+                return Text(date.toString());
+              },
+            ),
             const Text('You have pushed the button this many times:'),
             ValueListenableBuilder(
               valueListenable: counterViewModel.countNotifier,
@@ -49,10 +62,19 @@ class _CounterPageState extends State<CounterPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: null,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      floatingActionButton: Row(
+        children: [
+          FloatingActionButton(
+            onPressed: counterViewModel.increment,
+            tooltip: 'Increment',
+            child: const Icon(Icons.add),
+          ),
+          FloatingActionButton(
+            onPressed: counterViewModel.updateDate,
+            tooltip: 'Update Date',
+            child: const Icon(Icons.update),
+          ),
+        ],
       ),
     );
   }

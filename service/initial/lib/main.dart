@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:demo/counter_page.dart';
+import 'package:demo/locator.dart';
 
 void main() {
+  setupLocator();
+
   runApp(const MyApp());
 }
 
