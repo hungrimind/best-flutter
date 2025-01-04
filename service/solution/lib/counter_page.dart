@@ -63,6 +63,8 @@ class _CounterPageState extends State<CounterPage> {
         ),
       ),
       floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        spacing: 10,
         children: [
           FloatingActionButton(
             onPressed: counterViewModel.increment,
