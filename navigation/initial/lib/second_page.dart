@@ -7,19 +7,14 @@ class SecondPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pink.shade100,
       appBar: AppBar(
         title: const Text('Second Screen'),
       ),
       body: Center(
         child: Column(
+          spacing: 20,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'Second Screen',
-              style: TextStyle(fontSize: 24),
-            ),
-            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -31,7 +26,6 @@ class SecondPage extends StatelessWidget {
               },
               child: const Text('Go to Third Screen'),
             ),
-            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);

@@ -16,6 +16,7 @@ class _LoginFormState extends State<LoginForm> {
     return Form(
       key: _formKey,
       child: Column(
+        spacing: 20,
         children: [
           TextFormField(
             decoration: const InputDecoration(

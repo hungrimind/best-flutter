@@ -7,19 +7,18 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue.shade100,
       appBar: AppBar(
         title: const Text('Home Screen'),
       ),
       body: Center(
         child: Column(
+          spacing: 20,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
               'Home Screen',
               style: TextStyle(fontSize: 24),
             ),
-            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 // Implement navigation to the second page

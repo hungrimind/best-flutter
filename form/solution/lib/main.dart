@@ -17,7 +17,10 @@ class MyApp extends StatelessWidget {
           title: const Text('TextField Example'),
         ),
         body: const Center(
-          child: LoginForm(),
+          child: Padding(
+            padding: EdgeInsets.all(20),
+            child: LoginForm(),
+          ),
         ),
       ),
     );

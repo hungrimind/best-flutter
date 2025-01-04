@@ -12,7 +12,10 @@ class ListViewBuilderExample extends StatelessWidget {
       body: ListView.builder(
         itemCount: 5,
         itemBuilder: (context, index) {
-          return Text('item');
+          return Align(
+            alignment: Alignment.center,
+            child: Text('item'),
+          );
         },
       ),
     );
