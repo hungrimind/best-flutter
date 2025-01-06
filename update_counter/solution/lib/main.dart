@@ -13,54 +13,54 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
-      home: const LayoutDemo(),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class LayoutDemo extends StatelessWidget {
-  const LayoutDemo({super.key});
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
 
-  Widget _buildColorBox(Color color) {
-    return Container(
-      margin: const EdgeInsets.all(8),
-      width: 50,
-      height: 50,
-      color: color,
-    );
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Row & Column Demo'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(widget.title),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // A row of colored boxes
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildColorBox(Colors.red),
-                _buildColorBox(Colors.green),
-                _buildColorBox(Colors.blue),
-              ],
+          children: <Widget>[
+            const Text(
+              'You have pushed the button this many times:',
             ),
-            const SizedBox(height: 20), // Spacing
-            // A column of text
-            Column(
-              children: const [
-                Text('First Text'),
-                Text('Second Text'),
-                Text('Third Text'),
-              ],
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
       ),
     );
   }
