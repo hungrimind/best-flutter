@@ -17,8 +17,10 @@ void main() {
     final ThemeData theme = materialApp.theme!;
 
     // Verify that the colorScheme is seeded with Colors.blue
-    expect(theme.colorScheme, isA<ColorScheme>());
+    expect(theme.colorScheme, isA<ColorScheme>(),
+        reason: 'The colorScheme should be a ColorScheme');
     expect(theme.colorScheme.primary,
-        equals(ColorScheme.fromSeed(seedColor: Colors.blue).primary));
+        equals(ColorScheme.fromSeed(seedColor: Colors.blue).primary),
+        reason: 'The primary color should be blue');
   });
 }
