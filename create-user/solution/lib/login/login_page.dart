@@ -1,0 +1,84 @@
+import 'package:demo/create_account/create_page.dart';
+import 'package:demo/database_page.dart';
+import 'package:demo/locator.dart';
+import 'package:demo/user_service.dart';
+import 'package:flutter/material.dart';
+
+import 'login_view_model.dart';
+
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key, required this.title});
+
+  final String title;
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  late final LoginViewModel loginViewModel;
+  late final UserService userService = locator.get<UserService>();
+  late final TextEditingController nameController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    loginViewModel = LoginViewModel(userService);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(widget.title),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DatabasePage(
+                            sqliteAbstraction: userService.sqliteAbstraction,
+                          )));
+            },
+            icon: Icon(Icons.list),
+          ),
+        ],
+      ),
+      body: Center(
+        child: ValueListenableBuilder(
+          valueListenable: loginViewModel.userNotifier,
+          builder: (context, user, child) {
+            return Column(
+              children: [
+                TextField(
+                  controller: nameController,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      try {
+                        loginViewModel.login();
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(e.toString())));
+                      }
+                    },
+                    child: Text('Login')),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CreateAccountPage()));
+                  },
+                  child: Text('Create Account'),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+}

@@ -52,6 +52,17 @@ class SqliteAbstraction {
     db.execute(query, [user.id]);
   }
 
+  User? getUser(String name) {
+    final query = 'SELECT * FROM users WHERE name = ?';
+    final result = db.select(query, [name]);
+    return result
+        .map((row) => User(
+            name: row['name'] as String,
+            id: row['id'] as int,
+            uid: row['uid'] as int))
+        .firstOrNull;
+  }
+
   Stream<User?> listenToUser(String name) {
     return db.updates.where((update) => update.tableName == 'users').map((_) {
       final query = 'SELECT * FROM users WHERE name = ?';

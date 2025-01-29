@@ -5,8 +5,8 @@ import 'package:demo/sqlite_abstraction.dart';
 import 'package:demo/user.dart';
 import 'package:flutter/material.dart';
 
-class LoginViewModel {
-  LoginViewModel() {
+class UserService {
+  UserService() {
     init();
   }
 
@@ -28,6 +28,17 @@ class LoginViewModel {
     });
     sqliteAbstraction
         .createUser(User(name: name, uid: Random().nextInt(1000000)));
+  }
+
+  void startSession() {
+    if (sqliteAbstraction.getUser(userNotifier.value!.name) == null) {
+      throw Exception('User not found');
+    }
+    sqliteAbstraction.createSession(userNotifier.value!);
+  }
+
+  void endSession() {
+    sqliteAbstraction.deleteSession(userNotifier.value!);
   }
 
   void dispose() {

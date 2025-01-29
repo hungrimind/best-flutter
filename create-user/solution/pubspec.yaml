@@ -35,6 +35,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   sqlite3: ^2.7.2
+  get_it: ^8.0.3
 
 dev_dependencies:
   flutter_test:
