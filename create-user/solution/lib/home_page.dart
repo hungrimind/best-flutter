@@ -1,5 +1,7 @@
+import 'package:demo/database_page.dart';
 import 'package:demo/home_page_view_model.dart';
 import 'package:demo/locator.dart';
+import 'package:demo/sqlite_abstraction.dart';
 import 'package:demo/user_service.dart';
 import 'package:flutter/material.dart';
 
@@ -24,9 +26,16 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             onPressed: () {
-              homePageViewModel.signOut();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DatabasePage(
+                    sqliteAbstraction: locator<SqliteAbstraction>(),
+                  ),
+                ),
+              );
             },
-            icon: const Icon(Icons.logout),
+            icon: Icon(Icons.list),
           ),
         ],
       ),
@@ -38,6 +47,12 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text('Welcome ${user?.name ?? ''}'),
+                ElevatedButton(
+                  onPressed: () {
+                    homePageViewModel.signOut();
+                  },
+                  child: const Text("Sign Out"),
+                ),
               ],
             );
           },

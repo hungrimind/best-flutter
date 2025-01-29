@@ -84,35 +84,31 @@ class _DatabasePageState extends State<DatabasePage> {
                     itemCount: users.length,
                     itemBuilder: (context, index) {
                       final user = users[index];
-                      return Card(
-                        elevation: 2,
-                        margin: const EdgeInsets.only(bottom: 12),
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor: theme.colorScheme.primary,
-                            child: Text(
-                              user.name[0].toUpperCase(),
-                              style: TextStyle(
-                                color: theme.colorScheme.onPrimary,
-                              ),
+                      return ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: theme.colorScheme.primary,
+                          child: Text(
+                            user.name[0].toUpperCase(),
+                            style: TextStyle(
+                              color: theme.colorScheme.onPrimary,
                             ),
                           ),
-                          title: Text(
-                            user.name,
-                            style: theme.textTheme.titleMedium,
+                        ),
+                        title: Text(
+                          user.name,
+                          style: theme.textTheme.titleMedium,
+                        ),
+                        subtitle: Text(
+                          'ID: ${user.id} • UID: ${user.uid}',
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: theme.textTheme.bodySmall?.color,
                           ),
-                          subtitle: Text(
-                            'ID: ${user.id} • UID: ${user.uid}',
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              color: theme.textTheme.bodySmall?.color,
-                            ),
-                          ),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.delete_outline),
-                            onPressed: () {
-                              widget.sqliteAbstraction.deleteUser(user);
-                            },
-                          ),
+                        ),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.delete_outline),
+                          onPressed: () {
+                            widget.sqliteAbstraction.deleteUser(user);
+                          },
                         ),
                       );
                     },
