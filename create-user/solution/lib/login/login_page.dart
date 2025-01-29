@@ -17,15 +17,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  late final LoginViewModel loginViewModel;
-  late final UserService userService = locator.get<UserService>();
-  late final TextEditingController nameController = TextEditingController();
+  late final LoginViewModel loginViewModel = LoginViewModel(
+    userService: locator<UserService>(),
+  );
 
-  @override
-  void initState() {
-    super.initState();
-    loginViewModel = LoginViewModel(userService);
-  }
+  late final TextEditingController nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +67,11 @@ class _LoginPageState extends State<LoginPage> {
                 TextButton(
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CreateAccountPage()));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CreateAccountPage(),
+                      ),
+                    );
                   },
                   child: Text('Create Account'),
                 ),

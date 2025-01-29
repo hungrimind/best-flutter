@@ -35,16 +35,40 @@ class SqliteAbstraction {
   void createUser(User user) {
     final query = 'INSERT INTO users (name, uid) VALUES  (?, ?)';
     db.execute(query, [user.name, user.uid]);
+    final dbUser = getUser(user.name);
+    if (dbUser == null) {
+      throw Exception('User not found');
+    }
+    createSession(dbUser);
   }
 
   void deleteUser(User user) {
-    final query = 'DELETE FROM users WHERE id = ?';
-    db.execute(query, [user.id]);
+    final deleteSessionQuery = 'DELETE FROM sessions WHERE userId = ?';
+    db.execute(deleteSessionQuery, [user.id]);
+    
+    final deleteUserQuery = 'DELETE FROM users WHERE id = ?';
+    db.execute(deleteUserQuery, [user.id]);
   }
 
   void createSession(User user) {
     final query = 'INSERT INTO sessions (userId) VALUES (?)';
     db.execute(query, [user.id]);
+  }
+
+  User? sessionExists() {
+    final query = 'SELECT * FROM sessions';
+    final result = db.select(query);
+    if (result.isEmpty) {
+      return null;
+    }
+
+    final sessionUserId = result[0]['userId'] as int;
+    final userQuery = 'SELECT * FROM users WHERE id = ?';
+    final userResult = db.select(userQuery, [sessionUserId]);
+    return User(
+        name: userResult[0]['name'] as String,
+        id: userResult[0]['id'] as int,
+        uid: userResult[0]['uid'] as int);
   }
 
   void deleteSession(User user) {

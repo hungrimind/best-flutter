@@ -3,11 +3,11 @@ import 'package:demo/user_service.dart';
 import 'package:flutter/material.dart';
 
 class LoginViewModel {
-  LoginViewModel(UserService userService) : _userService = userService;
+  LoginViewModel({required UserService userService}) : _userService = userService;
 
   final UserService _userService;
 
-  late final ValueNotifier<User?> userNotifier = _userService.userNotifier;
+  ValueNotifier<User?> get userNotifier => _userService.userNotifier;
 
   void login() {
     _userService.startSession();
