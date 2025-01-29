@@ -1,12 +1,15 @@
 import 'package:demo/home.dart';
 import 'package:demo/locator.dart';
 import 'package:demo/login/login_page.dart';
+import 'package:demo/sqlite_abstraction.dart';
 import 'package:demo/user_service.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
+
+  await locator<SqliteAbstraction>().loadSqlite();
   runApp(const MyApp());
 }
 
@@ -28,9 +31,15 @@ class _MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: userService.userStreamSubscription != null
-          ? const HomePage()
-          : const LoginPage(title: 'Login'),
+      home: ValueListenableBuilder(
+        valueListenable: userService.userNotifier,
+        builder: (context, user, child) {
+          if (user == null) {
+            return const LoginPage(title: 'Login');
+          }
+          return const HomePage();
+        },
+      ),
     );
   }
 }

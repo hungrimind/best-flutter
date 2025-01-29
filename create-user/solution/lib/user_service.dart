@@ -6,39 +6,33 @@ import 'package:demo/user.dart';
 import 'package:flutter/material.dart';
 
 class UserService {
-  UserService() {
-    init();
-  }
+  UserService({required SqliteAbstraction sqliteAbstraction})
+      : _sqliteAbstraction = sqliteAbstraction;
 
   final ValueNotifier<User?> userNotifier = ValueNotifier(null);
 
   StreamSubscription<User?>? userStreamSubscription;
 
-  late SqliteAbstraction sqliteAbstraction;
-
-  void init() {
-    sqliteAbstraction = SqliteAbstraction();
-    sqliteAbstraction.loadSqlite();
-  }
+  final SqliteAbstraction _sqliteAbstraction;
 
   void createUser(String name) {
     userStreamSubscription ??=
-        sqliteAbstraction.listenToUser(name).listen((user) {
+        _sqliteAbstraction.listenToUser(name).listen((user) {
       userNotifier.value = user;
     });
-    sqliteAbstraction
+    _sqliteAbstraction
         .createUser(User(name: name, uid: Random().nextInt(1000000)));
   }
 
   void startSession() {
-    if (sqliteAbstraction.getUser(userNotifier.value!.name) == null) {
+    if (_sqliteAbstraction.getUser(userNotifier.value!.name) == null) {
       throw Exception('User not found');
     }
-    sqliteAbstraction.createSession(userNotifier.value!);
+    _sqliteAbstraction.createSession(userNotifier.value!);
   }
 
   void endSession() {
-    sqliteAbstraction.deleteSession(userNotifier.value!);
+    _sqliteAbstraction.deleteSession(userNotifier.value!);
   }
 
   void dispose() {
