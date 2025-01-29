@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                 ElevatedButton(
                     onPressed: () {
                       try {
-                        loginViewModel.login();
+                        loginViewModel.login(nameController.text);
                       } catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(e.toString())));

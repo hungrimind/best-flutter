@@ -16,8 +16,11 @@ class UserService {
   final SqliteAbstraction _sqliteAbstraction;
 
   void _listenToUser(String name) {
-    userStreamSubscription ??=
-        _sqliteAbstraction.listenToUser(name).listen((user) {
+    // Cancel existing subscription first
+    userStreamSubscription?.cancel();
+    
+    userNotifier.value = _sqliteAbstraction.getUser(name);
+    userStreamSubscription = _sqliteAbstraction.listenToUser(name).listen((user) {
       userNotifier.value = user;
     });
   }
@@ -28,10 +31,21 @@ class UserService {
         .createUser(User(name: name, uid: Random().nextInt(1000000)));
   }
 
+  void createSession(String name) {
+    final user = _sqliteAbstraction.getUser(name);
+    if (user == null) {
+      throw Exception('User not found');
+    }
+
+    _sqliteAbstraction.createSession(user);
+    _listenToUser(name);
+  }
+
   void startSession() {
     final user = _sqliteAbstraction.sessionExists();
     if (user == null) {
-      throw Exception('User not found');
+      print('No session found');
+      return; 
     }
     _listenToUser(user.name);
     userNotifier.value = user;
@@ -39,6 +53,7 @@ class UserService {
 
   void endSession() {
     _sqliteAbstraction.deleteSession(userNotifier.value!);
+    userNotifier.value = null;
   }
 
   void dispose() {

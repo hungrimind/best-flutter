@@ -1,4 +1,4 @@
-import 'package:demo/home.dart';
+import 'package:demo/home_page.dart';
 import 'package:demo/locator.dart';
 import 'package:demo/login/login_page.dart';
 import 'package:demo/sqlite_abstraction.dart';
@@ -10,6 +10,7 @@ Future<void> main() async{
   setupLocator();
 
   await locator<SqliteAbstraction>().loadSqlite();
+  locator<UserService>().startSession();
   runApp(const MyApp());
 }
 

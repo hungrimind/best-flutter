@@ -51,8 +51,11 @@ class SqliteAbstraction {
   }
 
   void createSession(User user) {
-    final query = 'INSERT INTO sessions (userId) VALUES (?)';
-    db.execute(query, [user.id]);
+    final deleteQuery = 'DELETE FROM sessions';
+    db.execute(deleteQuery);
+    
+    final insertQuery = 'INSERT INTO sessions (userId) VALUES (?)';
+    db.execute(insertQuery, [user.id]);
   }
 
   User? sessionExists() {
