@@ -18,9 +18,10 @@ class UserService {
   void _listenToUser(String name) {
     // Cancel existing subscription first
     userStreamSubscription?.cancel();
-    
+
     userNotifier.value = _sqliteAbstraction.getUser(name);
-    userStreamSubscription = _sqliteAbstraction.listenToUser(name).listen((user) {
+    userStreamSubscription =
+        _sqliteAbstraction.listenToUser(name).listen((user) {
       userNotifier.value = user;
     });
   }
@@ -41,11 +42,11 @@ class UserService {
     _listenToUser(name);
   }
 
-  void startSession() {
+  void checkForSession() {
     final user = _sqliteAbstraction.sessionExists();
     if (user == null) {
       print('No session found');
-      return; 
+      return;
     }
     _listenToUser(user.name);
     userNotifier.value = user;

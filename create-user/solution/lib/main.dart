@@ -5,12 +5,12 @@ import 'package:demo/sqlite_abstraction.dart';
 import 'package:demo/user_service.dart';
 import 'package:flutter/material.dart';
 
-Future<void> main() async{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
 
   await locator<SqliteAbstraction>().loadSqlite();
-  locator<UserService>().startSession();
+  locator<UserService>().checkForSession();
   runApp(const MyApp());
 }
 
