@@ -46,47 +46,23 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         ],
       ),
       body: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 300),
-          child: Column(
-            spacing: 8,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Name',
+        child: ValueListenableBuilder(
+          valueListenable: userService.userNotifier,
+          builder: (context, user, child) {
+            return Column(
+              children: [
+                TextField(
+                  controller: nameController,
                 ),
-                controller: nameController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a name';
-                  }
-                  return null;
-                },
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  if (nameController.text.isNotEmpty) {
-                    createAccountViewModel.createUser(nameController.text);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                            'User created, click database viewer in top right to see users'),
-                      ),
-                    );
-                    nameController.clear();
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Please enter a name'),
-                      ),
-                    );
-                  }
-                },
-                child: Text('Create Account'),
-              ),
-            ],
-          ),
+                ElevatedButton(
+                    onPressed: () {
+                      createAccountViewModel.createUser(nameController.text);
+                      Navigator.pop(context);
+                    },
+                    child: Text('Create Account')),
+              ],
+            );
+          },
         ),
       ),
     );
