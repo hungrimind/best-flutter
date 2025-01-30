@@ -13,13 +13,12 @@ class CreateAccountPage extends StatefulWidget {
 
 class _CreateAccountPageState extends State<CreateAccountPage> {
   late final CreateAccountViewModel createAccountViewModel;
-  late final UserService userService = locator.get<UserService>();
   late final TextEditingController nameController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    createAccountViewModel = CreateAccountViewModel(userService);
+    createAccountViewModel = CreateAccountViewModel(locator<UserService>());
   }
 
   @override
@@ -35,7 +34,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => DatabasePage(
-                    userService: userService,
+                    userService: locator<UserService>(),
                   ),
                 ),
               );
@@ -66,7 +65,18 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
               ElevatedButton(
                 onPressed: () {
                   if (nameController.text.isNotEmpty) {
-                    createAccountViewModel.createUser(nameController.text);
+                    final userCreated =
+                        createAccountViewModel.createUser(nameController.text);
+
+                    if (userCreated == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('User not created'),
+                        ),
+                      );
+                      return;
+                    }
+
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text(

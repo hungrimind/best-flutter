@@ -7,7 +7,12 @@ class UserService {
 
   final DatabaseAbstraction _databaseAbstraction;
 
-  void createUser(User user) {
+  /// Creates a user and returns the created user
+  ///
+  /// Throws: [Exception]
+  ///
+  /// * [Exception] - If the user is not found
+  User createUser(User user) {
     final query = 'INSERT INTO users (name, uid) VALUES  (?, ?)';
     _databaseAbstraction.dbExecute(query, [user.name, user.uid]);
     final dbUser = getUser(user.name);
@@ -15,6 +20,7 @@ class UserService {
       throw Exception('User not found');
     }
     createSession(dbUser);
+    return dbUser;
   }
 
   void deleteUser(User user) {
