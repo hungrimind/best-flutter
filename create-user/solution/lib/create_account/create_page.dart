@@ -1,7 +1,6 @@
 import 'package:demo/create_account/create_view_model.dart';
 import 'package:demo/database_page.dart';
 import 'package:demo/locator.dart';
-import 'package:demo/sqlite_abstraction.dart';
 import 'package:demo/user_service.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +35,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => DatabasePage(
-                    sqliteAbstraction: locator<SqliteAbstraction>(),
+                    userService: userService,
                   ),
                 ),
               );

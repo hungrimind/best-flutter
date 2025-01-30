@@ -1,6 +1,6 @@
 import 'package:demo/create_account/create_page.dart';
+import 'package:demo/database_abstraction.dart';
 import 'package:demo/locator.dart';
-import 'package:demo/sqlite_abstraction.dart';
 import 'package:demo/user_service.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +8,13 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
 
-  await locator<SqliteAbstraction>().loadSqlite();
+  await locator<DatabaseAbstraction>().loadDatabaseWithTables(
+    [
+      '''CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, uid INTEGER NOT NULL)''',
+      '''CREATE TABLE IF NOT EXISTS sessions (id INTEGER PRIMARY KEY AUTOINCREMENT, userId INTEGER NOT NULL, FOREIGN KEY (userId) REFERENCES users(id))'''
+    ],
+    'my_app',
+  );
 
   runApp(const MyApp());
 }
