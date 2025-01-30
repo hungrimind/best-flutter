@@ -21,8 +21,11 @@ class FakeFailureUserService extends Fake implements UserService {
 }
 
 void main() {
-  
-  
+
+  tearDown(() {
+    locator.reset();
+  });
+
   group('CreateAccountPage', () {
     testWidgets('Creates user and shows success message', (tester) async {
       // Register success implementation
@@ -40,8 +43,7 @@ void main() {
         find.text('User created, click database viewer in top right to see users'),
         findsOneWidget,
       );
-      
-      locator.reset();
+
     });
 
     testWidgets('Shows error message when user creation fails', (tester) async {
@@ -58,7 +60,6 @@ void main() {
 
       expect(find.text('User not created'), findsOneWidget);
       
-      locator.reset();
     });
   });
 }

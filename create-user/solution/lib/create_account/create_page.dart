@@ -26,7 +26,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Create Account'),
+        title: Text('Create Account Lesson'),
         actions: [
           IconButton(
             onPressed: () {
