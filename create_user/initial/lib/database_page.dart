@@ -99,7 +99,7 @@ class _DatabasePageState extends State<DatabasePage> {
                           style: theme.textTheme.titleMedium,
                         ),
                         subtitle: Text(
-                          'ID: ${user.id} • UID: ${user.uid}',
+                          'ID: ${user.id} - UID: ${user.uid}',
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: theme.textTheme.bodySmall?.color,
                           ),
