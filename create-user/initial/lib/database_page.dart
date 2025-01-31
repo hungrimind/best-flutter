@@ -1,11 +1,11 @@
+import 'package:demo/user_service.dart';
 import 'package:flutter/material.dart';
 
-import 'sqlite_abstraction.dart';
 import 'user.dart';
 
 class DatabasePage extends StatefulWidget {
-  const DatabasePage({super.key, required this.sqliteAbstraction});
-  final SqliteAbstraction sqliteAbstraction;
+  const DatabasePage({super.key, required this.userService});
+  final UserService userService;
 
   @override
   State<DatabasePage> createState() => _DatabasePageState();
@@ -16,7 +16,7 @@ class _DatabasePageState extends State<DatabasePage> {
   @override
   void initState() {
     super.initState();
-    usersStream = widget.sqliteAbstraction.listenToAllUsers();
+    usersStream = widget.userService.listenToAllUsers();
   }
 
   @override
@@ -32,7 +32,7 @@ class _DatabasePageState extends State<DatabasePage> {
         padding: const EdgeInsets.all(16.0),
         child: StreamBuilder<List<User>>(
           stream: usersStream,
-          initialData: widget.sqliteAbstraction.getAllUsers(),
+          initialData: widget.userService.getAllUsers(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Center(
@@ -107,7 +107,7 @@ class _DatabasePageState extends State<DatabasePage> {
                         trailing: IconButton(
                           icon: const Icon(Icons.delete_outline),
                           onPressed: () {
-                            widget.sqliteAbstraction.deleteUser(user);
+                            widget.userService.deleteUser(user);
                           },
                         ),
                       );
