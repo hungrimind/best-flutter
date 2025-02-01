@@ -1,5 +1,5 @@
-import 'package:demo/database_abstraction.dart';
-import 'package:demo/user.dart';
+import 'package:demo/auth/user.dart';
+import 'package:demo/core/database_abstraction.dart';
 
 class UserService {
   UserService({required DatabaseAbstraction databaseAbstraction})
