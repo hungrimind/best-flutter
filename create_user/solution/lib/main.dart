@@ -1,4 +1,4 @@
-import 'package:demo/auth/create_page.dart';
+import 'package:demo/auth/create_account_view.dart';
 import 'package:demo/auth/user_service.dart';
 import 'package:demo/core/database_abstraction.dart';
 import 'package:demo/core/locator.dart';

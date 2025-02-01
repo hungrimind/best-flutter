@@ -1,6 +1,6 @@
-import 'package:demo/auth/create_view_model.dart';
+import 'package:demo/auth/create_account_view_model.dart';
 import 'package:demo/auth/user_service.dart';
-import 'package:demo/core/database_page.dart';
+import 'package:demo/core/database_view.dart';
 import 'package:demo/core/locator.dart';
 import 'package:flutter/material.dart';
 
