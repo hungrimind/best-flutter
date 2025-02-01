@@ -1,7 +1,7 @@
-import 'package:demo/create_account/create_view_model.dart';
-import 'package:demo/database_page.dart';
-import 'package:demo/locator.dart';
-import 'package:demo/user_service.dart';
+import 'package:demo/auth/create_view_model.dart';
+import 'package:demo/auth/user_service.dart';
+import 'package:demo/core/database_page.dart';
+import 'package:demo/core/locator.dart';
 import 'package:flutter/material.dart';
 
 class CreateAccountPage extends StatefulWidget {

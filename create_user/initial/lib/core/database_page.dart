@@ -1,7 +1,7 @@
-import 'package:demo/user_service.dart';
+import 'package:demo/auth/user_service.dart';
 import 'package:flutter/material.dart';
 
-import 'user.dart';
+import '../auth/user.dart';
 
 class DatabasePage extends StatefulWidget {
   const DatabasePage({super.key, required this.userService});

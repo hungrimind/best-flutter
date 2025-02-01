@@ -1,6 +1,5 @@
-import 'package:demo/user.dart';
-import 'package:demo/user_service.dart';
-import 'package:uuid/uuid.dart';
+import 'package:demo/auth/user.dart';
+import 'package:demo/auth/user_service.dart';
 
 class CreateAccountViewModel {
   CreateAccountViewModel(UserService userService) : _userService = userService;

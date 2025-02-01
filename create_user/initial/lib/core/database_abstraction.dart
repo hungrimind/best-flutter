@@ -1,4 +1,4 @@
-import 'package:demo/sqlite/sqlite3.dart' show openSqliteDb;
+import 'package:demo/core/sqlite/sqlite3.dart' show openSqliteDb;
 import 'package:sqlite3/common.dart' show CommonDatabase;
 
 class DatabaseUpdate {
@@ -37,7 +37,6 @@ class DatabaseAbstraction {
   Future<void> openDatabaseWithTables(
       List<String> tables, String dbName) async {
     _db = await openSqliteDb(dbName: dbName);
-
 
     for (final table in tables) {
       _db.execute(table);

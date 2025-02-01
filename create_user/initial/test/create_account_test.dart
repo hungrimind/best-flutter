@@ -1,9 +1,9 @@
-import 'package:demo/locator.dart';
+import 'package:demo/auth/create_page.dart';
+import 'package:demo/auth/user.dart';
+import 'package:demo/auth/user_service.dart';
+import 'package:demo/core/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:demo/create_account/create_page.dart';
-import 'package:demo/user_service.dart';
-import 'package:demo/user.dart';
 
 // Create two fake implementations for success and failure scenarios
 class FakeSuccessUserService extends Fake implements UserService {
@@ -21,35 +21,34 @@ class FakeFailureUserService extends Fake implements UserService {
 }
 
 void main() {
-
   tearDown(() {
     locator.reset();
   });
 
   group('CreateAccountPage', () {
-    // testWidgets('Creates user and shows success message', (tester) async {
-    //   // Register success implementation
-    //   locator.registerSingleton<UserService>(FakeSuccessUserService());
-      
-    //   await tester.pumpWidget(MaterialApp(
-    //     home: CreateAccountPage(),
-    //   ));
+    testWidgets('Creates user and shows success message', (tester) async {
+      // Register success implementation
+      locator.registerSingleton<UserService>(FakeSuccessUserService());
 
-    //   await tester.enterText(find.byType(TextFormField), 'Test User');
-    //   await tester.tap(find.text('Create Account'));
-    //   await tester.pump();
+      await tester.pumpWidget(MaterialApp(
+        home: CreateAccountPage(),
+      ));
 
-    //   expect(
-    //     find.text('User created, click database viewer in top right to see users'),
-    //     findsOneWidget,
-    //   );
+      await tester.enterText(find.byType(TextFormField), 'Test User');
+      await tester.tap(find.text('Create Account'));
+      await tester.pump();
 
-    // });
+      expect(
+        find.text(
+            'User created, click database viewer in top right to see users'),
+        findsOneWidget,
+      );
+    });
 
     testWidgets('Shows error message when user creation fails', (tester) async {
       // Register failure implementation
       locator.registerSingleton<UserService>(FakeFailureUserService());
-      
+
       await tester.pumpWidget(MaterialApp(
         home: CreateAccountPage(),
       ));

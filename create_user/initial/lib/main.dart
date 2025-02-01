@@ -1,7 +1,7 @@
-import 'package:demo/create_account/create_page.dart';
-import 'package:demo/database_abstraction.dart';
-import 'package:demo/locator.dart';
-import 'package:demo/user_service.dart';
+import 'package:demo/auth/create_page.dart';
+import 'package:demo/auth/user_service.dart';
+import 'package:demo/core/database_abstraction.dart';
+import 'package:demo/core/locator.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {

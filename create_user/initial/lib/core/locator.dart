@@ -1,5 +1,5 @@
-import 'package:demo/database_abstraction.dart';
-import 'package:demo/user_service.dart';
+import 'package:demo/auth/user_service.dart';
+import 'package:demo/core/database_abstraction.dart';
 import 'package:get_it/get_it.dart';
 
 final locator = GetIt.instance;
