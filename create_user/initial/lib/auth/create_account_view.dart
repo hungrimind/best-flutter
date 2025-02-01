@@ -28,7 +28,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text('Create Account Lesson'),
         actions: [
-          IconButton(
+          TextButton(
             onPressed: () {
               Navigator.push(
                 context,
@@ -39,7 +39,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 ),
               );
             },
-            icon: Icon(Icons.list),
+            child: const Text('Show Database'),
           ),
         ],
       ),
