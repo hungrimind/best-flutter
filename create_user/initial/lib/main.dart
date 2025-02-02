@@ -11,7 +11,7 @@ Future<void> main() async {
   await locator<DatabaseAbstraction>().openDatabaseWithTables(
     [
       'CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, uid INTEGER NOT NULL)',
-      'CREATE TABLE IF NOT EXISTS sessions (id INTEGER PRIMARY KEY AUTOINCREMENT, userId INTEGER NOT NULL, FOREIGN KEY (userId) REFERENCES users(id))'
+      'CREATE TABLE IF NOT EXISTS sessions (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, FOREIGN KEY (user_id) REFERENCES users(id))'
     ],
     'my_app',
   );

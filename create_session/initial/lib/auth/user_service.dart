@@ -32,7 +32,7 @@ class UserService {
 
   /// Delete any session for this user as well
   void deleteUser(User user) {
-    deleteSession();
+    deleteSession(user);
 
     final deleteUserQuery = 'DELETE FROM users WHERE id = ?';
     _databaseAbstraction.dbExecute(deleteUserQuery, [user.id]);
@@ -60,7 +60,7 @@ class UserService {
       return null;
     }
 
-    final sessionUserId = result[0]['userId'] as int;
+    final sessionUserId = result[0]['user_id'] as int;
     final userQuery = 'SELECT * FROM users WHERE id = ?';
     final userResult =
         _databaseAbstraction.dbSelect(userQuery, [sessionUserId]);
@@ -70,9 +70,9 @@ class UserService {
     return user;
   }
 
-  void deleteSession() {
-    final query = 'DELETE FROM sessions';
-    _databaseAbstraction.dbExecute(query);
+  void deleteSession(User user) {
+    final query = 'DELETE FROM sessions WHERE user_id = ?';
+    _databaseAbstraction.dbExecute(query, [user.id]);
     userNotifier.value = null;
   }
 
@@ -103,8 +103,8 @@ class UserService {
   }
 
   void _createSession(User user) {
-    deleteSession();
-    final insertQuery = 'INSERT INTO sessions (userId) VALUES (?)';
+    deleteSession(user);
+    final insertQuery = 'INSERT INTO sessions (user_id) VALUES (?)';
     _databaseAbstraction.dbExecute(insertQuery, [user.id]);
     _listenToUser(user);
     userNotifier.value = user;

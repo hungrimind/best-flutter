@@ -24,7 +24,7 @@ class UserService {
   }
 
   void deleteUser(User user) {
-    final deleteSessionQuery = 'DELETE FROM sessions WHERE userId = ?';
+    final deleteSessionQuery = 'DELETE FROM sessions WHERE user_id = ?';
     _databaseAbstraction.dbExecute(deleteSessionQuery, [user.id]);
 
     final deleteUserQuery = 'DELETE FROM users WHERE id = ?';
@@ -35,7 +35,7 @@ class UserService {
     final deleteQuery = 'DELETE FROM sessions';
     _databaseAbstraction.dbExecute(deleteQuery);
 
-    final insertQuery = 'INSERT INTO sessions (userId) VALUES (?)';
+    final insertQuery = 'INSERT INTO sessions (user_id) VALUES (?)';
     _databaseAbstraction.dbExecute(insertQuery, [user.id]);
   }
 
@@ -46,7 +46,7 @@ class UserService {
       return null;
     }
 
-    final sessionUserId = result[0]['userId'] as int;
+    final sessionUserId = result[0]['user_id'] as int;
     final userQuery = 'SELECT * FROM users WHERE id = ?';
     final userResult =
         _databaseAbstraction.dbSelect(userQuery, [sessionUserId]);
@@ -54,7 +54,7 @@ class UserService {
   }
 
   void deleteSession(User user) {
-    final query = 'DELETE FROM sessions WHERE userId = ?';
+    final query = 'DELETE FROM sessions WHERE user_id = ?';
     _databaseAbstraction.dbExecute(query, [user.id]);
   }
 

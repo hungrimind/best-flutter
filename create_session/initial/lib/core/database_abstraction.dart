@@ -28,11 +28,10 @@ class DatabaseAbstraction {
     return _db.select(query, parameters);
   }
 
-  Stream<DatabaseUpdate> get dbUpdates =>
-      _db.updates.map((update) => DatabaseUpdate(
-          DatabaseUpdateKind.values[update.kind.index],
-          update.tableName,
-          update.rowId));
+  Stream<DatabaseUpdate> get dbUpdates => _db.updates.map(
+        (update) => DatabaseUpdate(DatabaseUpdateKind.values[update.kind.index],
+            update.tableName, update.rowId),
+      );
 
   Future<void> openDatabaseWithTables(
       List<String> tables, String dbName) async {

@@ -31,23 +31,6 @@ void main() {
   });
 
   group('LoginView', () {
-    // testWidgets('Creates session and shows success by clearing text field',
-    //     (tester) async {
-    //   // Register success implementation
-    //   locator.registerSingleton<UserService>(FakeSuccessUserService());
-
-    //   await tester.pumpWidget(MaterialApp(
-    //     home: LoginView(),
-    //   ));
-
-    //   await tester.enterText(find.byType(TextFormField), 'Test User');
-    //   await tester.tap(find.text('Login'));
-    //   await tester.pump();
-
-    //   // Verify text field is cleared (success case)
-    //   expect(find.text('Test User'), findsNothing);
-    // });
-
     testWidgets('Shows error message when session creation fails',
         (tester) async {
       // Register failure implementation
