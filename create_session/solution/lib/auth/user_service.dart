@@ -64,10 +64,7 @@ class UserService {
     final userQuery = 'SELECT * FROM users WHERE id = ?';
     final userResult =
         _databaseAbstraction.dbSelect(userQuery, [sessionUserId]);
-    final user = User(
-        name: userResult[0]['name'] as String,
-        id: userResult[0]['id'] as int,
-        uid: userResult[0]['uid'] as String);
+    final user = User.fromJson(userResult[0]);
     _listenToUser(user);
     userNotifier.value = user;
     return user;
@@ -83,10 +80,7 @@ class UserService {
     final query = 'SELECT * FROM users WHERE name = ?';
     final result = _databaseAbstraction.dbSelect(query, [name]);
     return result
-        .map((row) => User(
-            name: row['name'] as String,
-            id: row['id'] as int,
-            uid: row['uid'] as String))
+        .map((row) => User.fromJson(row))
         .firstOrNull;
   }
 
@@ -100,10 +94,7 @@ class UserService {
       final query = 'SELECT * FROM users WHERE name = ?';
       final result = _databaseAbstraction.dbSelect(query, [user.name]);
       final userResult = result
-          .map((row) => User(
-              name: row['name'] as String,
-              id: row['id'] as int,
-              uid: row['uid'] as String))
+          .map((row) => User.fromJson(row))
           .firstOrNull;
       return userResult;
     }).listen((userResult) {

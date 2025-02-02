@@ -31,7 +31,7 @@ void main() {
       locator.registerSingleton<UserService>(FakeSuccessUserService());
 
       await tester.pumpWidget(MaterialApp(
-        home: CreateAccountPage(),
+        home: CreateAccountView(),
       ));
 
       await tester.enterText(find.byType(TextFormField), 'Test User');
@@ -50,7 +50,7 @@ void main() {
       locator.registerSingleton<UserService>(FakeFailureUserService());
 
       await tester.pumpWidget(MaterialApp(
-        home: CreateAccountPage(),
+        home: CreateAccountView(),
       ));
 
       await tester.enterText(find.byType(TextFormField), 'Test User');

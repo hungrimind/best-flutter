@@ -50,10 +50,7 @@ class UserService {
     final userQuery = 'SELECT * FROM users WHERE id = ?';
     final userResult =
         _databaseAbstraction.dbSelect(userQuery, [sessionUserId]);
-    return User(
-        name: userResult[0]['name'] as String,
-        id: userResult[0]['id'] as int,
-        uid: userResult[0]['uid'] as String);
+    return User.fromJson(userResult[0]);
   }
 
   void deleteSession(User user) {
@@ -65,10 +62,7 @@ class UserService {
     final query = 'SELECT * FROM users WHERE name = ?';
     final result = _databaseAbstraction.dbSelect(query, [name]);
     return result
-        .map((row) => User(
-            name: row['name'] as String,
-            id: row['id'] as int,
-            uid: row['uid'] as String))
+        .map((row) => User.fromJson(row))
         .firstOrNull;
   }
 
@@ -79,10 +73,7 @@ class UserService {
       final query = 'SELECT * FROM users WHERE name = ?';
       final result = _databaseAbstraction.dbSelect(query, [name]);
       return result
-          .map((row) => User(
-              name: row['name'] as String,
-              id: row['id'] as int,
-              uid: row['uid'] as String))
+          .map((row) => User.fromJson(row))
           .firstOrNull;
     });
   }
@@ -91,10 +82,7 @@ class UserService {
     const query = 'SELECT * FROM users';
     final result = _databaseAbstraction.dbSelect(query);
     return result
-        .map((row) => User(
-            name: row['name'] as String,
-            id: row['id'] as int,
-            uid: row['uid'] as String))
+        .map((row) => User.fromJson(row))
         .toList();
   }
 

@@ -4,14 +4,14 @@ import 'package:demo/core/database_view.dart';
 import 'package:demo/core/locator.dart';
 import 'package:flutter/material.dart';
 
-class CreateAccountPage extends StatefulWidget {
-  const CreateAccountPage({super.key});
+class CreateAccountView extends StatefulWidget {
+  const CreateAccountView({super.key});
 
   @override
-  State<CreateAccountPage> createState() => _CreateAccountPageState();
+  State<CreateAccountView> createState() => _CreateAccountViewState();
 }
 
-class _CreateAccountPageState extends State<CreateAccountPage> {
+class _CreateAccountViewState extends State<CreateAccountView> {
   late final CreateAccountViewModel createAccountViewModel;
   late final TextEditingController nameController = TextEditingController();
 
