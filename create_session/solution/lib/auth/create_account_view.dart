@@ -2,7 +2,6 @@ import 'package:demo/auth/create_account_view_model.dart';
 import 'package:demo/auth/user_service.dart';
 import 'package:demo/core/database_view.dart';
 import 'package:demo/core/locator.dart';
-import 'package:demo/home/home_view.dart';
 import 'package:flutter/material.dart';
 
 class CreateAccountView extends StatefulWidget {
@@ -34,9 +33,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DatabasePage(
-                    userService: locator<UserService>(),
-                  ),
+                  builder: (context) => const DatabasePage(),
                 ),
               );
             },

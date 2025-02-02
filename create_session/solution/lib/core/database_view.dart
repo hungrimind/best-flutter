@@ -1,22 +1,30 @@
 import 'package:demo/auth/user_service.dart';
+import 'package:demo/core/database_abstraction.dart';
+import 'package:demo/core/database_view_model.dart';
+import 'package:demo/core/locator.dart';
 import 'package:flutter/material.dart';
 
 import '../auth/user.dart';
 
 class DatabasePage extends StatefulWidget {
-  const DatabasePage({super.key, required this.userService});
-  final UserService userService;
+  const DatabasePage({super.key});
 
   @override
   State<DatabasePage> createState() => _DatabasePageState();
 }
 
 class _DatabasePageState extends State<DatabasePage> {
+  late final DatabaseViewModel databaseViewModel = DatabaseViewModel(
+    databaseAbstraction: locator<DatabaseAbstraction>(),
+    userService: locator<UserService>(),
+  );
+
   late Stream<List<User>> usersStream;
+
   @override
   void initState() {
     super.initState();
-    usersStream = widget.userService.listenToAllUsers();
+    usersStream = databaseViewModel.listenToAllUsers();
   }
 
   @override
@@ -32,7 +40,7 @@ class _DatabasePageState extends State<DatabasePage> {
         padding: const EdgeInsets.all(16.0),
         child: StreamBuilder<List<User>>(
           stream: usersStream,
-          initialData: widget.userService.getAllUsers(),
+          initialData: databaseViewModel.getAllUsers(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Center(
@@ -107,7 +115,7 @@ class _DatabasePageState extends State<DatabasePage> {
                         trailing: IconButton(
                           icon: const Icon(Icons.delete_outline),
                           onPressed: () {
-                            widget.userService.deleteUser(user);
+                            databaseViewModel.deleteUser(user);
                           },
                         ),
                       );

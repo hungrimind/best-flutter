@@ -1,5 +1,4 @@
 import 'package:demo/auth/create_account_view.dart';
-import 'package:demo/auth/create_account_view_model.dart';
 import 'package:demo/auth/login_view_model.dart';
 import 'package:demo/auth/user_service.dart';
 import 'package:demo/core/database_view.dart';
@@ -20,7 +19,7 @@ class _LoginViewState extends State<LoginView> {
   @override
   void initState() {
     super.initState();
-    loginViewModel = LoginViewModel(userService:locator<UserService>());
+    loginViewModel = LoginViewModel(userService: locator<UserService>());
   }
 
   @override
@@ -35,9 +34,7 @@ class _LoginViewState extends State<LoginView> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DatabasePage(
-                    userService: locator<UserService>(),
-                  ),
+                  builder: (context) => DatabasePage(),
                 ),
               );
             },
@@ -94,7 +91,8 @@ class _LoginViewState extends State<LoginView> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const CreateAccountView()),
+                    MaterialPageRoute(
+                        builder: (context) => const CreateAccountView()),
                   );
                 },
               )
