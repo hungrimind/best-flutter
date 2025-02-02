@@ -19,12 +19,16 @@ class _DatabasePageState extends State<DatabasePage> {
     userService: locator<UserService>(),
   );
 
-  late Stream<List<User>> usersStream;
-
   @override
   void initState() {
     super.initState();
-    usersStream = databaseViewModel.listenToAllUsers();
+    databaseViewModel.init();
+  }
+
+  @override
+  void dispose() {
+    databaseViewModel.dispose();
+    super.dispose();
   }
 
   @override
@@ -33,99 +37,153 @@ class _DatabasePageState extends State<DatabasePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Database Users'),
+        title: const Text('Database View'),
         elevation: 2,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
-        child: StreamBuilder<List<User>>(
-          stream: usersStream,
-          initialData: databaseViewModel.getAllUsers(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.error_outline,
-                        size: 48, color: Colors.red),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Error: ${snapshot.error}',
-                      style: theme.textTheme.titleMedium,
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              );
-            }
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ValueListenableBuilder<List<int>>(
+              valueListenable: databaseViewModel.sessions,
+              builder: (context, sessions, _) {
+                return _buildSessionsSection(theme, sessions);
+              },
+            ),
+            const SizedBox(height: 32),
+            ValueListenableBuilder<List<User>>(
+              valueListenable: databaseViewModel.users,
+              builder: (context, users, _) {
+                return _buildUsersSection(theme, users);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-            final users = snapshot.data ?? [];
-
-            if (users.isEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.people_outline,
-                        size: 64, color: theme.colorScheme.secondary),
-                    const SizedBox(height: 16),
-                    Text(
-                      'No users in database',
-                      style: theme.textTheme.titleMedium,
-                    ),
-                  ],
-                ),
-              );
-            }
-
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Total Users: ${users.length}',
-                  style: theme.textTheme.titleMedium,
-                ),
-                const SizedBox(height: 16),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: users.length,
-                    itemBuilder: (context, index) {
-                      final user = users[index];
-                      return ListTile(
-                        leading: CircleAvatar(
-                          backgroundColor: theme.colorScheme.primary,
-                          child: Text(
-                            user.name[0].toUpperCase(),
-                            style: TextStyle(
-                              color: theme.colorScheme.onPrimary,
-                            ),
-                          ),
-                        ),
-                        title: Text(
-                          user.name,
-                          style: theme.textTheme.titleMedium,
-                        ),
-                        subtitle: Text(
-                          'ID: ${user.id} - UID: ${user.uid}',
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.textTheme.bodySmall?.color,
-                          ),
-                        ),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.delete_outline),
-                          onPressed: () {
-                            databaseViewModel.deleteUser(user);
-                          },
-                        ),
-                      );
-                    },
+  Widget _buildSessionsSection(ThemeData theme, List<int> sessions) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Sessions',
+          style: theme.textTheme.headlineSmall,
+        ),
+        const SizedBox(height: 8),
+        if (sessions.isEmpty)
+          _buildEmptyView(
+            theme,
+            icon: Icons.schedule_outlined,
+            message: 'No sessions in database',
+          )
+        else
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: sessions.length,
+            itemBuilder: (context, index) {
+              final session = sessions[index];
+              return Card(
+                child: ListTile(
+                  title: Text(
+                    'Session user_id: $session',
+                    style: theme.textTheme.titleMedium,
                   ),
                 ),
-              ],
-            );
-          },
+              );
+            },
+          ),
+      ],
+    );
+  }
+
+  Widget _buildUsersSection(ThemeData theme, List<User> users) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Users',
+          style: theme.textTheme.headlineSmall,
         ),
+        const SizedBox(height: 8),
+        if (users.isEmpty)
+          _buildEmptyView(
+            theme,
+            icon: Icons.people_outline,
+            message: 'No users in database',
+          )
+        else
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: users.length,
+            itemBuilder: (context, index) {
+              final user = users[index];
+              return ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: theme.colorScheme.primary,
+                  child: Text(
+                    user.name[0].toUpperCase(),
+                    style: TextStyle(
+                      color: theme.colorScheme.onPrimary,
+                    ),
+                  ),
+                ),
+                title: Text(
+                  user.name,
+                  style: theme.textTheme.titleMedium,
+                ),
+                subtitle: Text(
+                  'ID: ${user.id} - UID: ${user.uid}',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.textTheme.bodySmall?.color,
+                  ),
+                ),
+                trailing: IconButton(
+                  icon: const Icon(Icons.delete_outline),
+                  onPressed: () {
+                    databaseViewModel.deleteUser(user);
+                  },
+                ),
+              );
+            },
+          ),
+      ],
+    );
+  }
+
+  Widget _buildErrorView(ThemeData theme, Object? error) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.error_outline, size: 48, color: Colors.red),
+          const SizedBox(height: 16),
+          Text(
+            'Error: $error',
+            style: theme.textTheme.titleMedium,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyView(ThemeData theme, {
+    required IconData icon,
+    required String message,
+  }) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 64, color: theme.colorScheme.secondary),
+          const SizedBox(height: 16),
+          Text(message, style: theme.textTheme.titleMedium),
+        ],
       ),
     );
   }

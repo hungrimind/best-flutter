@@ -15,7 +15,7 @@ class FakeUserService extends Fake implements UserService {
   ValueNotifier<User?> get userNotifier => _userNotifier;
 
   @override
-  void deleteSession() {
+  void deleteSession(User user) {
     deleteSessionCalled = true;
     _userNotifier.value = null;
   }

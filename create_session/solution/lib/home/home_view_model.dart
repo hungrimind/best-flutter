@@ -11,6 +11,6 @@ class HomeViewModel {
   ValueNotifier<User?> get userNotifier => _userService.userNotifier;
 
   void logout() {
-    _userService.deleteSession();
+    _userService.deleteSession(userNotifier.value!);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:demo/auth/user_service.dart';
+import 'package:demo/core/database_view.dart';
 import 'package:demo/core/locator.dart';
 import 'package:demo/home/home_view_model.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,23 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text('Home'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DatabasePage(),
+                ),
+              );
+            },
+            child: const Text('Show Database'),
+          ),
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
