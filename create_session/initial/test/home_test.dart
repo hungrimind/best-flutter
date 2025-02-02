@@ -1,7 +1,6 @@
 import 'package:demo/auth/user.dart';
 import 'package:demo/auth/user_service.dart';
 import 'package:demo/core/locator.dart';
-import 'package:demo/home/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
