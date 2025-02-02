@@ -14,27 +14,6 @@ class UserService {
 
   StreamSubscription<User?>? userStreamSubscription;
 
-  void _listenToUser(User user) {
-    // Cancel existing subscription first
-    userStreamSubscription?.cancel();
-
-    userStreamSubscription = _databaseAbstraction.dbUpdates
-        .where((update) => update.tableName == 'users')
-        .map((_) {
-      final query = 'SELECT * FROM users WHERE name = ?';
-      final result = _databaseAbstraction.dbSelect(query, [user.name]);
-      final userResult = result
-          .map((row) => User(
-              name: row['name'] as String,
-              id: row['id'] as int,
-              uid: row['uid'] as String))
-          .firstOrNull;
-      return userResult;
-    }).listen((userResult) {
-      userNotifier.value = userResult;
-    });
-  }
-
   /// Creates a user and returns the created user
   ///
   /// Throws: [Exception]
@@ -47,8 +26,7 @@ class UserService {
     if (dbUser == null) {
       throw Exception('User not found');
     }
-    _listenToUser(dbUser);
-    createSession(dbUser.name);
+    _createSession(dbUser);
     return dbUser;
   }
 
@@ -71,12 +49,7 @@ class UserService {
       throw Exception('User not found');
     }
 
-    deleteSession();
-
-    final insertQuery = 'INSERT INTO sessions (userId) VALUES (?)';
-    _databaseAbstraction.dbExecute(insertQuery, [user.id]);
-    _listenToUser(user);
-    userNotifier.value = user;
+    _createSession(user);
     return user;
   }
 
@@ -115,5 +88,34 @@ class UserService {
             id: row['id'] as int,
             uid: row['uid'] as String))
         .firstOrNull;
+  }
+
+  void _listenToUser(User user) {
+    // Cancel existing subscription first
+    userStreamSubscription?.cancel();
+
+    userStreamSubscription = _databaseAbstraction.dbUpdates
+        .where((update) => update.tableName == 'users')
+        .map((_) {
+      final query = 'SELECT * FROM users WHERE name = ?';
+      final result = _databaseAbstraction.dbSelect(query, [user.name]);
+      final userResult = result
+          .map((row) => User(
+              name: row['name'] as String,
+              id: row['id'] as int,
+              uid: row['uid'] as String))
+          .firstOrNull;
+      return userResult;
+    }).listen((userResult) {
+      userNotifier.value = userResult;
+    });
+  }
+
+  void _createSession(User user) {
+    deleteSession();
+    final insertQuery = 'INSERT INTO sessions (userId) VALUES (?)';
+    _databaseAbstraction.dbExecute(insertQuery, [user.id]);
+    _listenToUser(user);
+    userNotifier.value = user;
   }
 }
