@@ -11,8 +11,9 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  late final HomeViewModel homeViewModel =
-      HomeViewModel(userService: locator<UserService>());
+  late final HomeViewModel homeViewModel = HomeViewModel(
+    userService: locator<UserService>(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +26,21 @@ class _HomeViewState extends State<HomeView> {
             ValueListenableBuilder(
               valueListenable: homeViewModel.userNotifier,
               builder: (context, user, child) {
-                return Text(
-                    'Welcome ${user?.name}',
+                return Text('Welcome ${user?.name}',
                     style: Theme.of(context).textTheme.headlineLarge);
               },
             ),
-            TextButton(onPressed: homeViewModel.logout, child: Text('Logout'))
+            TextButton(
+              onPressed: () {
+                homeViewModel.logout();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Logged out'),
+                  ),
+                );
+              },
+              child: Text('Logout'),
+            )
           ],
         ),
       ),
