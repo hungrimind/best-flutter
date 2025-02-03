@@ -10,7 +10,7 @@ class FakeLessonException implements Exception {
 }
 
 class CounterRepository {
-  Result<int> fetchNumberFromFakeApi() {
+  Result<int, FakeLessonException> fetchNumberFromFakeApi() {
     return Result.error(FakeLessonException('Thanks for catching me!'));
   }
 }

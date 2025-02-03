@@ -12,9 +12,10 @@ class CounterViewModel {
   void fetchNumberFromFakeApi() {
     final result = counterRepository.fetchNumberFromFakeApi();
     switch (result) {
-      case Ok<int>():
+      case Ok():
         issuesNotifier.value = null;
       case Error():
+       // handle the result
     }
   }
 
