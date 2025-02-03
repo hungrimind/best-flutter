@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 class FakeUserService extends Fake implements UserService {
   final _userNotifier = ValueNotifier<User?>(
-    User(id: 1, name: 'Test User', uid: 'test-uid'),
+    User(id: 1, name: 'Test User', uid: 'test-uid', isAdmin: 0),
   );
   bool deleteSessionCalled = false;
 
@@ -27,7 +27,8 @@ void main() {
   });
 
   group('HomeView', () {
-    testWidgets('Shows snackbar and calls deleteSession when logging out', (tester) async {
+    testWidgets('Shows snackbar and calls deleteSession when logging out',
+        (tester) async {
       // Register fake implementation
       final fakeUserService = FakeUserService();
       locator.registerSingleton<UserService>(fakeUserService);
@@ -45,9 +46,9 @@ void main() {
 
       // Verify snackbar is shown
       expect(find.text('Logged out'), findsOneWidget);
-      
+
       // Verify deleteSession was called
       expect(fakeUserService.deleteSessionCalled, true);
     });
   });
-} 
+}

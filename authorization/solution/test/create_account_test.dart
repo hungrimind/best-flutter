@@ -9,7 +9,11 @@ import 'package:flutter_test/flutter_test.dart';
 class FakeSuccessUserService extends Fake implements UserService {
   @override
   User createUser(User user) {
-    return User(id: 1, name: user.name, uid: user.uid);
+    if (user.name == 'admin') {
+      return User(id: 1, name: user.name, uid: user.uid, isAdmin: 1);
+    } else {
+      return User(id: 1, name: user.name, uid: user.uid, isAdmin: 0);
+    }
   }
 }
 
@@ -59,5 +63,25 @@ void main() {
 
       expect(find.text('User not created'), findsOneWidget);
     });
+  });
+
+  testWidgets('Creates admin user and shows success message', (tester) async {
+    // Register success implementation
+    locator.registerSingleton<UserService>(FakeSuccessUserService());
+
+    await tester.pumpWidget(MaterialApp(
+      home: CreateAccountView(),
+    ));
+
+    await tester.enterText(find.byType(TextFormField), 'admin');
+    await tester.tap(find.text('Create Account'));
+    await tester.pump();
+
+    expect(
+      find.text(
+          'Admin user created, click database viewer in top right to see users'),
+      findsOneWidget,
+      reason: 'Admin user was not created',
+    );
   });
 }

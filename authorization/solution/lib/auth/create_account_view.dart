@@ -76,12 +76,21 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     }
 
                     nameController.clear();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                            'User created, click database viewer in top right to see users'),
-                      ),
-                    );
+                    if (userCreated.isAdmin == 1) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                              'Admin user created, click database viewer in top right to see users'),
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                              'User created, click database viewer in top right to see users'),
+                        ),
+                      );
+                    }
                     Navigator.of(context).pop();
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
