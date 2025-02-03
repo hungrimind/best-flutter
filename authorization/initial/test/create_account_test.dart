@@ -9,7 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 class FakeSuccessUserService extends Fake implements UserService {
   @override
   User createUser(User user) {
-    return User(id: 1, name: user.name, uid: user.uid);
+    return User(id: 1, name: user.name, uid: user.uid, isAdmin: 0);
   }
 }
 

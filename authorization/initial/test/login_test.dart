@@ -8,7 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 class FakeSuccessUserService extends Fake implements UserService {
   @override
   User createSession(String name) {
-    return User(id: 1, name: name, uid: 'test-uid');
+    return User(id: 1, name: name, uid: 'test-uid', isAdmin: 0);
   }
 
   @override
@@ -61,8 +61,7 @@ void main() {
       await tester.tap(find.text('Login'));
       await tester.pump();
 
-      expect(
-          find.text('No user associated with this name'), findsOneWidget);
+      expect(find.text('No user associated with this name'), findsOneWidget);
     });
 
     testWidgets('Shows error when trying to login with empty name',
@@ -79,4 +78,4 @@ void main() {
       expect(find.text('Please enter a name'), findsOneWidget);
     });
   });
-} 
+}
