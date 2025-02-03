@@ -11,7 +11,7 @@ class User {
       id: json['id'] as int?,
       name: json['name'] as String,
       uid: json['uid'] as String,
-      isAdmin: json['admin'] as int,
+      isAdmin: (json['admin'] as int?) ?? 0,
     );
   }
 
