@@ -135,7 +135,7 @@ class _WeatherViewState extends State<WeatherView> {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            '${weather.temperature.toStringAsFixed(1)}°',
+                            '${weather.temperature.toStringAsFixed(1)} c',
                             style: const TextStyle(
                               fontSize: 64,
                               fontWeight: FontWeight.bold,
