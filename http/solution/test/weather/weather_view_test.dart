@@ -46,20 +46,10 @@ void main() {
         reason:
             'No weather data available should be displayed prior to fetching data');
 
-    // Wait for the async operation to complete and rebuild
-    await tester.pumpAndSettle();
+    await tester.pump();
 
-    // Try both possible temperature formats with 'c' suffix
-    expect(
-      find.byWidgetPredicate((widget) {
-        if (widget is Text) {
-          return widget.data == '20.0 c' || widget.data == '20 c';
-        }
-        return false;
-      }),
-      findsOneWidget,
-      reason: 'Temperature should be displayed',
-    );
+    expect(find.text('20.0 c'), findsOneWidget,
+        reason: 'Temperature should be displayed');
 
     expect(find.text('Sunny'), findsOneWidget,
         reason: 'Weather condition should be displayed');
