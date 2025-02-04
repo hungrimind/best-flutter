@@ -42,17 +42,20 @@ void main() {
       ),
     );
 
-    expect(find.text('No weather data available'), findsOneWidget, reason: 'No weather data available should be displayed prior to fetching data');
+    expect(find.text('No weather data available'), findsOneWidget,
+        reason:
+            'No weather data available should be displayed prior to fetching data');
 
     await tester.pump();
 
-    expect(find.text('20.0°'), findsOneWidget, reason: 'Temperature should be displayed');
-    expect(find.text('Sunny'), findsOneWidget, reason: 'Weather condition should be displayed');
+    expect(find.text('20.0'), findsOneWidget,
+        reason: 'Temperature should be displayed');
+    expect(find.text('Sunny'), findsOneWidget,
+        reason: 'Weather condition should be displayed');
     expect(
       find.byWidgetPredicate((widget) {
         if (widget is Text) {
-          return widget.data == 'London' && 
-                 widget.style?.fontSize == 24;
+          return widget.data == 'London' && widget.style?.fontSize == 24;
         }
         return false;
       }),
@@ -60,4 +63,4 @@ void main() {
       reason: 'Location should be displayed',
     );
   });
-} 
+}
