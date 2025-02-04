@@ -48,7 +48,7 @@ void main() {
 
     await tester.pump();
 
-    expect(find.text('20.0'), findsOneWidget,
+    expect(find.text('20.0 c'), findsOneWidget,
         reason: 'Temperature should be displayed');
     expect(find.text('Sunny'), findsOneWidget,
         reason: 'Weather condition should be displayed');
