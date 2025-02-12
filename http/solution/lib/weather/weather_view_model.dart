@@ -8,7 +8,8 @@ class WeatherViewModel {
 
   final WeatherRepository _weatherRepository;
   final ValueNotifier<Weather?> weatherNotifier = ValueNotifier(null);
-  final ValueNotifier<String> selectedLocationNotifier = ValueNotifier('London');
+  final ValueNotifier<String> selectedLocationNotifier =
+      ValueNotifier('London');
 
   // Predefined list of cities
   final List<String> availableLocations = [

@@ -61,9 +61,7 @@ class UserService {
   User? getUser(String name) {
     final query = 'SELECT * FROM users WHERE name = ?';
     final result = _databaseAbstraction.dbSelect(query, [name]);
-    return result
-        .map((row) => User.fromJson(row))
-        .firstOrNull;
+    return result.map((row) => User.fromJson(row)).firstOrNull;
   }
 
   Stream<User?> listenToUser(String name) {
@@ -72,18 +70,14 @@ class UserService {
         .map((_) {
       final query = 'SELECT * FROM users WHERE name = ?';
       final result = _databaseAbstraction.dbSelect(query, [name]);
-      return result
-          .map((row) => User.fromJson(row))
-          .firstOrNull;
+      return result.map((row) => User.fromJson(row)).firstOrNull;
     });
   }
 
   List<User> getAllUsers() {
     const query = 'SELECT * FROM users';
     final result = _databaseAbstraction.dbSelect(query);
-    return result
-        .map((row) => User.fromJson(row))
-        .toList();
+    return result.map((row) => User.fromJson(row)).toList();
   }
 
   Stream<List<User>> listenToAllUsers() {

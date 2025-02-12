@@ -17,4 +17,4 @@ mixin LoadingStateMixin<T extends StatefulWidget> on State<T> {
     isLoading.dispose();
     super.dispose();
   }
-} 
+}

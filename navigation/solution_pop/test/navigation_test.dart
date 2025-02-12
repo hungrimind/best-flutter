@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:demo/main.dart';
 
 void main() {
-  testWidgets('Navigation from home to second page works', (WidgetTester tester) async {
+  testWidgets('Navigation from home to second page works',
+      (WidgetTester tester) async {
     // Build the app
     await tester.pumpWidget(const MyApp());
 
@@ -19,7 +20,7 @@ void main() {
     // Find and tap the navigation button
     final buttonFinder = find.text('Go to Second Screen');
     await tester.tap(buttonFinder);
-    
+
     // Wait for navigation animation to complete
     await tester.pumpAndSettle();
 
@@ -33,8 +34,8 @@ void main() {
     );
   });
 
-
-  testWidgets('Navigation pop from second page to home works', (WidgetTester tester) async {
+  testWidgets('Navigation pop from second page to home works',
+      (WidgetTester tester) async {
     // Build the app
     await tester.pumpWidget(const MyApp());
 

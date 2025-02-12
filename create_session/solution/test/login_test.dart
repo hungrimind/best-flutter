@@ -61,8 +61,7 @@ void main() {
       await tester.tap(find.text('Login'));
       await tester.pump();
 
-      expect(
-          find.text('No user associated with this name'), findsOneWidget);
+      expect(find.text('No user associated with this name'), findsOneWidget);
     });
 
     testWidgets('Shows error when trying to login with empty name',
@@ -79,4 +78,4 @@ void main() {
       expect(find.text('Please enter a name'), findsOneWidget);
     });
   });
-} 
+}

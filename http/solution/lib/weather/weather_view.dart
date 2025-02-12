@@ -85,7 +85,8 @@ class _WeatherViewState extends State<WeatherView> {
                                 borderRadius: BorderRadius.circular(12),
                                 elevation: 8,
                                 items: _viewModel.availableLocations
-                                    .map<DropdownMenuItem<String>>((String value) {
+                                    .map<DropdownMenuItem<String>>(
+                                        (String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
                                     child: Text(
@@ -111,7 +112,8 @@ class _WeatherViewState extends State<WeatherView> {
                     const SizedBox(height: 24),
                     // Weather info card
                     Container(
-                      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 62),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 32, horizontal: 62),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(16),

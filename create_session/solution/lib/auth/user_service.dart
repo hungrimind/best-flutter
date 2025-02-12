@@ -79,9 +79,7 @@ class UserService {
   User? getUser(String name) {
     final query = 'SELECT * FROM users WHERE name = ?';
     final result = _databaseAbstraction.dbSelect(query, [name]);
-    return result
-        .map((row) => User.fromJson(row))
-        .firstOrNull;
+    return result.map((row) => User.fromJson(row)).firstOrNull;
   }
 
   void _listenToUser(User user) {
@@ -93,9 +91,7 @@ class UserService {
         .map((_) {
       final query = 'SELECT * FROM users WHERE name = ?';
       final result = _databaseAbstraction.dbSelect(query, [user.name]);
-      final userResult = result
-          .map((row) => User.fromJson(row))
-          .firstOrNull;
+      final userResult = result.map((row) => User.fromJson(row)).firstOrNull;
       return userResult;
     }).listen((userResult) {
       userNotifier.value = userResult;

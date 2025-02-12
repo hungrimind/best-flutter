@@ -14,7 +14,7 @@ class DatabaseViewModel {
 
   final DatabaseAbstraction _databaseAbstraction;
   final UserService _userService;
-  
+
   final ValueNotifier<List<User>> users = ValueNotifier<List<User>>([]);
   final ValueNotifier<List<int>> sessions = ValueNotifier<List<int>>([]);
 
@@ -51,9 +51,7 @@ class DatabaseViewModel {
   List<User> getAllUsers() {
     const query = 'SELECT * FROM users';
     final result = _databaseAbstraction.dbSelect(query);
-    return result
-        .map((row) => User.fromJson(row))
-        .toList();
+    return result.map((row) => User.fromJson(row)).toList();
   }
 
   void deleteUser(User user) {
@@ -71,8 +69,6 @@ class DatabaseViewModel {
   List<int> getAllSessions() {
     const query = 'SELECT * FROM sessions';
     final result = _databaseAbstraction.dbSelect(query);
-    return result
-        .map((row) => row['user_id'] as int)
-        .toList();
+    return result.map((row) => row['user_id'] as int).toList();
   }
 }
