@@ -38,12 +38,23 @@ analyze-all:
 		cd $$d && dart analyze . --fatal-infos && cd -; \
 	done
 
+# Add new command for building web
+.PHONY: build-web-all
+build-web-all:
+	@for d in $(SOLUTION_DIRS); do \
+		echo "=== Building web for $$d ==="; \
+		cd $$d && flutter build web && cd -; \
+	done
+
 # CI commands
 .PHONY: ci-lint
 ci-lint: get-all analyze-all format-check
 
 .PHONY: ci-test
 ci-test: get-all test-all
+
+.PHONY: ci-build
+ci-build: get-all build-web-all
 
 # Run all checks (useful for pre-commit)
 .PHONY: check-all
@@ -58,7 +69,9 @@ help:
 	@echo "  make format       - Format code in all solution projects"
 	@echo "  make format-check - Check if code is properly formatted (used in CI)"
 	@echo "  make analyze-all  - Analyze code in all solution projects"
+	@echo "  make build-web-all - Build web for all solution projects"
 	@echo "  make ci-lint      - Run all lint-related checks (used in CI)"
 	@echo "  make ci-test      - Run all tests (used in CI)"
+	@echo "  make ci-build     - Build web for all projects (used in CI)"
 	@echo "  make check-all    - Run all checks locally"
 	@echo "  make help         - Show this help message"
