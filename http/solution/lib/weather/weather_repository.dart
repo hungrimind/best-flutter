@@ -14,7 +14,7 @@ class WeatherRepository {
   }) async {
     final response = await _http.get('$baseUrl/$city?format=j1');
     final json = jsonDecode(response);
-    
+
     if (json != null) {
       return Weather.fromWttrIn(json);
     } else {

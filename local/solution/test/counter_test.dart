@@ -11,9 +11,14 @@ class FakeDatabaseAbstraction extends Fake implements DatabaseAbstraction {
   final _controller = StreamController<DatabaseUpdate>.broadcast();
 
   @override
-  List<Map<String, dynamic>> dbSelect(String query, [List<Object?> parameters = const []]) {
+  List<Map<String, dynamic>> dbSelect(String query,
+      [List<Object?> parameters = const []]) {
     if (query.contains('SELECT count FROM counters')) {
-      return currentCount == 0 ? [] : [{'count': currentCount}];
+      return currentCount == 0
+          ? []
+          : [
+              {'count': currentCount}
+            ];
     }
     return [];
   }
@@ -95,4 +100,4 @@ void main() {
       expect(find.text('Database View'), findsOneWidget);
     });
   });
-} 
+}

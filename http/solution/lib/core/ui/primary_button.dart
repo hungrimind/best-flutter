@@ -31,10 +31,11 @@ class _PrimaryButtonState extends State<PrimaryButton> with LoadingStateMixin {
             onTap: loading ? null : () => withLoading(widget.onPressed),
             child: Container(
               width: widget.width,
-              padding: widget.padding ?? const EdgeInsets.symmetric(
-                horizontal: 24,
-                vertical: 12,
-              ),
+              padding: widget.padding ??
+                  const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
               decoration: BoxDecoration(
                 color: const Color(0xFF6B4EFF),
                 borderRadius: BorderRadius.circular(12),
@@ -89,4 +90,4 @@ class _PrimaryButtonState extends State<PrimaryButton> with LoadingStateMixin {
       },
     );
   }
-} 
+}

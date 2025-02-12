@@ -46,10 +46,11 @@ void main() {
     );
   });
 
-  testWidgets('Date service should update the date when button is tapped', (WidgetTester tester) async {
+  testWidgets('Date service should update the date when button is tapped',
+      (WidgetTester tester) async {
     // Capture the time just before widget creation
     final beforeTime = DateTime.now();
-    
+
     await tester.pumpWidget(const MyApp());
     await tester.pumpAndSettle();
 
@@ -78,8 +79,8 @@ void main() {
         try {
           final displayedDate = DateTime.parse(widget.data!);
           // Verify the displayed date is between before and after our widget creation
-          return displayedDate.isAfter(beforeTime) && 
-                 widget.data != initialDateText; // Make sure it changed
+          return displayedDate.isAfter(beforeTime) &&
+              widget.data != initialDateText; // Make sure it changed
         } catch (e) {
           return false;
         }
@@ -87,7 +88,8 @@ void main() {
       return false;
     });
 
-    expect(dateTextFinder, findsOneWidget, 
-      reason: 'Should find a Text widget with an updated DateTime different from initial value');
+    expect(dateTextFinder, findsOneWidget,
+        reason:
+            'Should find a Text widget with an updated DateTime different from initial value');
   });
 }

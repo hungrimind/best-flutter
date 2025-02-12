@@ -14,7 +14,6 @@ class Widgets extends StatelessWidget {
             style: TextStyle(fontSize: 20),
           ),
           ListTile(
-            title: Text('List Tile Widget'),
             leading: Icon(Icons.star),
           ),
           FlutterLogo(

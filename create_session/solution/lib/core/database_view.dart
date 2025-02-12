@@ -155,7 +155,8 @@ class _DatabasePageState extends State<DatabasePage> {
     );
   }
 
-  Widget _buildEmptyView(ThemeData theme, {
+  Widget _buildEmptyView(
+    ThemeData theme, {
     required IconData icon,
     required String message,
   }) {

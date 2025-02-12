@@ -10,4 +10,4 @@ class DateService {
   void dispose() {
     dateNotifier.dispose();
   }
-} 
+}

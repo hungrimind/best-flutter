@@ -15,7 +15,7 @@ class CounterViewModel {
       case Ok():
         issuesNotifier.value = null;
       case Error():
-          issuesNotifier.value = result.error;
+        issuesNotifier.value = result.error;
     }
   }
 

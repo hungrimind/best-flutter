@@ -20,18 +20,8 @@ jobs:
           channel: "stable"
           flutter-version: ${{ env.FLUTTER_VERSION }}
           
-      - name: Run lint and format check for all solution projects
-        run: |
-          for d in $(find . -type d -name "*solution*"); do
-            if [ -f "$d/pubspec.yaml" ]; then
-              echo "Checking project in $d"
-              cd "$d"
-              flutter pub get
-              dart analyze . --fatal-infos
-              dart format $(find lib -name "*.dart" -not \( -name "*.*freezed.dart" -o -name "*.*g.dart" \) ) --set-exit-if-changed
-              cd -
-            fi
-          done
+      - name: Run lint and format check
+        run: make ci-lint
 
   unit_and_widget_tests:
     needs: lint
@@ -44,14 +34,5 @@ jobs:
           channel: "stable"
           flutter-version: ${{ env.FLUTTER_VERSION }}
           
-      - name: Run tests for all solution projects
-        run: |
-          for d in $(find . -type d -name "*solution*"); do
-            if [ -f "$d/pubspec.yaml" ]; then
-              echo "Testing project in $d"
-              cd "$d"
-              flutter pub get
-              flutter test --exclude-tags=golden
-              cd -
-            fi
-          done 
+      - name: Run tests
+        run: make ci-test 

@@ -5,7 +5,8 @@ class CounterViewModel {
   CounterViewModel(this.counterRepository);
   final CounterRepository counterRepository;
 
-  final ValueNotifier<FakeLessonException?> issuesNotifier = ValueNotifier(null);
+  final ValueNotifier<FakeLessonException?> issuesNotifier =
+      ValueNotifier(null);
 
   void fetchNumberFromFakeApi() {
     try {
