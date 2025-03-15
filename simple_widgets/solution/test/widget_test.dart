@@ -6,6 +6,7 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:demo/main.dart';
+import 'package:flutter/material.dart' show ElevatedButton, TextButton;
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -14,8 +15,8 @@ void main() {
     await tester.pumpWidget(const MyApp());
 
     // Find the widgets
-    final elevatedButtonFinder = find.text('ElevatedButton');
-    final textButtonFinder = find.text('TextButton');
+    final elevatedButtonFinder = find.byType(ElevatedButton);
+    final textButtonFinder = find.byType(TextButton);
 
     // Get the render boxes for both widgets
     final elevatedButtonBox = tester.getRect(elevatedButtonFinder);
