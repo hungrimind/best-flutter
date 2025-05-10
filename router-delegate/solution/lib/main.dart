@@ -1,13 +1,16 @@
 import 'package:demo/first.dart';
 import 'package:demo/second.dart';
 import 'package:demo/third.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 ValueNotifier<List<String>> routes = ValueNotifier(['/']);
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
+  setUrlStrategy(PathUrlStrategy());
   runApp(const MyApp());
 }
 
@@ -82,8 +85,12 @@ class MyRouterDelegate extends RouterDelegate<String> {
     return Navigator(
       key: navigatorKey,
       pages: createPages(),
-      onDidRemovePage: (page) {
-        print('onDidRemovePage: ${page.name}');
+      onPopPage: (route, result) {
+        if (routes.value.length > 1) {
+          routes.value = routes.value.sublist(0, routes.value.length - 1);
+          return true;
+        }
+        return false;
       },
     );
   }
@@ -91,15 +98,23 @@ class MyRouterDelegate extends RouterDelegate<String> {
   @override
   Future<bool> popRoute() {
     if (routes.value.length > 1) {
-      navigatorKey.currentState?.pop();
-      return Future.value(true);
+      routes.value = routes.value.sublist(0, routes.value.length - 1);
+      return SynchronousFuture(true);
     }
-    return Future.value(false);
+    return SynchronousFuture(false);
   }
 
   @override
   Future<void> setNewRoutePath(String configuration) {
-    return Future.value();
+    return SynchronousFuture(null);
+  }
+
+  @override
+  String? get currentConfiguration {
+    if (routes.value.isEmpty) {
+      return null;
+    }
+    return routes.value.last;
   }
 
   @override
