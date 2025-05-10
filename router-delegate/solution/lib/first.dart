@@ -18,13 +18,13 @@ class FirstPage extends StatelessWidget {
             Text('First Page'),
             ElevatedButton(
               onPressed: () {
-                routes.value = ['/first', '/second'];
+                routes.value = ['/', '/second'];
               },
               child: const Text('Go to Second'),
             ),
             ElevatedButton(
               onPressed: () {
-                routes.value = ['/first', '/second', '/third'];
+                routes.value = ['/', '/second', '/third'];
               },
               child: const Text('Add Second and Third'),
             ),

@@ -3,8 +3,7 @@ import 'package:demo/second.dart';
 import 'package:demo/third.dart';
 import 'package:flutter/material.dart';
 
-ValueNotifier<List<String>> routes =
-    ValueNotifier(['/first', '/second', '/third']);
+ValueNotifier<List<String>> routes = ValueNotifier(['/']);
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -38,9 +37,7 @@ class MyRouteInformationParser extends RouteInformationParser<String> {
     RouteInformation routeInformation,
   ) async {
     final uri = routeInformation.uri;
-    if (uri.toString().isEmpty) {
-      return '/first';
-    }
+
     return uri.toString();
   }
 
@@ -62,7 +59,7 @@ class MyRouterDelegate extends RouterDelegate<String> {
       final route = navigationStack[index];
 
       switch (route) {
-        case '/first':
+        case '/':
           pages.add(
             MaterialPage(key: ValueKey('Page_$index'), child: FirstPage()),
           );
