@@ -30,6 +30,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp.router(
       routerDelegate: routerDelegate,
       routeInformationParser: routeInformationParser,
+      backButtonDispatcher: RootBackButtonDispatcher(),
     );
   }
 }
@@ -64,16 +65,16 @@ class MyRouterDelegate extends RouterDelegate<String> {
       switch (route) {
         case '/':
           pages.add(
-            MaterialPage(key: ValueKey('Page_$index'), child: FirstPage()),
+            MaterialPage(name: 'first', key: UniqueKey(), child: FirstPage()),
           );
         case '/second':
           pages.add(
-            MaterialPage(key: ValueKey('Page_$index'), child: SecondPage()),
+            MaterialPage(name: 'second', key: UniqueKey(), child: SecondPage()),
           );
 
         case '/third':
           pages.add(
-            MaterialPage(key: ValueKey('Page_$index'), child: ThirdPage()),
+            MaterialPage(name: 'third', key: UniqueKey(), child: ThirdPage()),
           );
       }
     }
@@ -86,7 +87,8 @@ class MyRouterDelegate extends RouterDelegate<String> {
       key: navigatorKey,
       pages: createPages(),
       onPopPage: (route, result) {
-        if (routes.value.length > 1) {
+        print('onPopPage: ${route}');
+        if (route.didPop(result)) {
           routes.value = routes.value.sublist(0, routes.value.length - 1);
           return true;
         }
@@ -96,17 +98,31 @@ class MyRouterDelegate extends RouterDelegate<String> {
   }
 
   @override
-  Future<bool> popRoute() {
+  Future<bool> popRoute() async {
+    print('popRoute');
     if (routes.value.length > 1) {
       routes.value = routes.value.sublist(0, routes.value.length - 1);
-      return SynchronousFuture(true);
+      return true;
     }
-    return SynchronousFuture(false);
+    return false;
   }
 
   @override
-  Future<void> setNewRoutePath(String configuration) {
-    return SynchronousFuture(null);
+  Future<void> setNewRoutePath(String configuration) async {
+    if (configuration.isEmpty) {
+      routes.value = ['/'];
+    } else {
+      final uri = Uri.parse(configuration);
+      final path = uri.path;
+      if (path == '/') {
+        routes.value = ['/'];
+      } else if (path == '/second') {
+        routes.value = ['/', '/second'];
+      } else if (path == '/third') {
+        routes.value = ['/', '/second', '/third'];
+      }
+    }
+    return null;
   }
 
   @override
