@@ -44,9 +44,7 @@ class MyRouterDelegate extends RouterDelegate<String> {
           );
           break;
         case '/third':
-          pages.add(
-            MaterialPage(key: const ValueKey('third'), child: ThirdPage()),
-          );
+          // TODO: Implement third page
           break;
       }
     }

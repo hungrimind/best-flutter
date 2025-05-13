@@ -1,14 +1,15 @@
 import 'package:demo/first.dart';
 import 'package:demo/second.dart';
 import 'package:demo/third.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 ValueNotifier<List<String>> routes = ValueNotifier(['/']);
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
+  setUrlStrategy(PathUrlStrategy());
   runApp(const MyApp());
 }
 
@@ -20,34 +21,66 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final routerDelegate = MyRouterDelegate();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routerDelegate: MyRouterDelegate(),
+      routerDelegate: routerDelegate,
     );
+  }
+}
+
+class MyRouteInformationParser extends RouteInformationParser<String> {
+  @override
+  Future<String> parseRouteInformation(
+    RouteInformation routeInformation,
+  ) async {
+    final uri = routeInformation.uri;
+
+    return uri.toString();
+  }
+
+  @override
+  RouteInformation? restoreRouteInformation(String configuration) {
+    if (configuration.isNotEmpty) {
+      return RouteInformation(uri: Uri.parse(configuration));
+    }
+
+    return null;
   }
 }
 
 class MyRouterDelegate extends RouterDelegate<String> {
   List<Page<dynamic>> createPages() {
     List<Page<dynamic>> pages = [];
-    for (int index = 0; index < routes.value.length; index++) {
-      switch (routes.value[index]) {
+    final navigationStack = routes.value;
+    for (int index = 0; index < navigationStack.length; index++) {
+      final route = navigationStack[index];
+
+      switch (route) {
         case '/':
           pages.add(
-            MaterialPage(key: const ValueKey('first'), child: FirstPage()),
+            MaterialPage(
+                name: 'first',
+                key: const ValueKey('first'),
+                child: FirstPage()),
           );
-          break;
         case '/second':
           pages.add(
-            MaterialPage(key: const ValueKey('second'), child: SecondPage()),
+            MaterialPage(
+                name: 'second',
+                key: const ValueKey('second'),
+                child: SecondPage()),
           );
-          break;
+
         case '/third':
           pages.add(
-            MaterialPage(key: const ValueKey('third'), child: ThirdPage()),
+            MaterialPage(
+                name: 'third',
+                key: const ValueKey('third'),
+                child: ThirdPage()),
           );
-          break;
       }
     }
     return pages;
@@ -59,7 +92,7 @@ class MyRouterDelegate extends RouterDelegate<String> {
       key: navigatorKey,
       pages: createPages(),
       onDidRemovePage: (page) {
-        print('onDidRemovePage: ${routes.value}');
+        routes.value = routes.value.sublist(0, routes.value.length - 1);
       },
     );
   }
@@ -68,14 +101,14 @@ class MyRouterDelegate extends RouterDelegate<String> {
   Future<bool> popRoute() async {
     if (routes.value.length > 1) {
       routes.value = routes.value.sublist(0, routes.value.length - 1);
-      return SynchronousFuture(true);
+      return true;
     }
-    return SynchronousFuture(false);
+    return false;
   }
 
   @override
   Future<void> setNewRoutePath(String configuration) async {
-    SynchronousFuture(() => routes.value = [configuration]);
+    routes.value = [configuration];
   }
 
   @override
