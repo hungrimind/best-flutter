@@ -75,7 +75,7 @@ class MyRouterDelegate extends RouterDelegate<String> {
 
   @override
   Future<void> setNewRoutePath(String configuration) async {
-    SynchronousFuture(() => routes.value = [configuration]);
+    routes.value = [configuration];
   }
 
   @override
