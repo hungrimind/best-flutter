@@ -24,7 +24,8 @@ void main() {
     );
 
     // Verify that we have 3 pages in the navigation stack
-    expect(navigator.pages.length, 3);
+    expect(navigator.pages.length, 3,
+        reason: 'App should initialize with 3 pages');
 
     // Verify that the third page is visible initially
     expect(find.text('Third Page'), findsOneWidget,

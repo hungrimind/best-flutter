@@ -36,9 +36,7 @@ class MyRouteInformationParser extends RouteInformationParser<String> {
   Future<String> parseRouteInformation(
     RouteInformation routeInformation,
   ) async {
-    final uri = routeInformation.uri;
-
-    return uri.toString();
+    return routeInformation.uri.toString();
   }
 
   @override
@@ -46,7 +44,6 @@ class MyRouteInformationParser extends RouteInformationParser<String> {
     if (configuration.isNotEmpty) {
       return RouteInformation(uri: Uri.parse(configuration));
     }
-
     return null;
   }
 }
