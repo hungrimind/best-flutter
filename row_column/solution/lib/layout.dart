@@ -18,6 +18,7 @@ class LayoutDemo extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(width: 50, height: 50, color: Colors.red),
                 Container(width: 50, height: 50, color: Colors.green),

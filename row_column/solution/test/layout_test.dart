@@ -10,11 +10,19 @@ void main() {
 
     // Find the Row widget
     final rowFinder = find.byType(Row);
-    expect(rowFinder, findsOneWidget);
+    expect(rowFinder, findsOneWidget,
+        reason: 'The layout should contain exactly one Row widget');
+
+    // Verify the Row has MainAxisAlignment.center
+    final row = tester.widget<Row>(rowFinder);
+    expect(row.mainAxisAlignment, MainAxisAlignment.center,
+        reason: 'The Row should center its children horizontally');
 
     // Find all containers
     final containerFinder = find.byType(Container);
-    expect(containerFinder, findsNWidgets(3));
+    expect(containerFinder, findsNWidgets(3),
+        reason:
+            'The layout should contain exactly three containers, one for each color');
 
     // Get the actual Container widgets
     final containers = tester.widgetList<Container>(containerFinder);
@@ -24,9 +32,12 @@ void main() {
     final expectedColors = [Colors.red, Colors.green, Colors.blue];
 
     for (var container in containers) {
-      expect((container.constraints)?.maxWidth, 50);
-      expect((container.constraints)?.maxHeight, 50);
-      expect(container.color, expectedColors[index]);
+      expect((container.constraints)?.maxWidth, 50,
+          reason: 'Each container should have a width of 50 logical pixels');
+      expect((container.constraints)?.maxHeight, 50,
+          reason: 'Each container should have a height of 50 logical pixels');
+      expect(container.color, expectedColors[index],
+          reason: 'Container ${index + 1} should be ${expectedColors[index]}');
       index++;
     }
   });
